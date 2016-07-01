@@ -12,9 +12,6 @@ public struct ThreadCode {
     
     /**
      用如下方式代替objective-c的@synchronized
-     
-     - author: 黄河
-     - date: 16-07-01 10:07:07
      */
     public static func test_objc_sync_enter() {
         
@@ -36,9 +33,6 @@ public struct ThreadCode {
     
     /**
      使用信号量来保持同步dispatch_semaphore_create
-     
-     - author: 黄河
-     - date: 16-07-01 10:07:44
      */
     public static func test_dispatch_semaphore_create() {
         let semaphore = dispatch_semaphore_create(1)
@@ -58,9 +52,6 @@ public struct ThreadCode {
     
     /**
      使用条件锁保持同步
-     
-     - author: 黄河
-     - date: 16-07-01 11:07:03
      */
     public static func test_NSConditionLock() {
         
@@ -80,6 +71,9 @@ public struct ThreadCode {
         }
     }
     
+    /**
+     使用NSOperation
+     */
     public static func test_NSOperationQueue() {
         
         let op1 = NSBlockOperation {
@@ -99,5 +93,26 @@ public struct ThreadCode {
         queue.underlyingQueue = myQueue
         queue.addOperation(op1)
         queue.addOperation(op2)
+    }
+    
+    /**
+     GCD根据标识获取指定的queue
+     */
+    public static func test_Dispatch_specfi() {
+        
+        var queue = dispatch_queue_create("org.reactivecocoa.ReactiveCocoa.SignalProducer.buffer", DISPATCH_QUEUE_SERIAL)
+        dispatch_queue_set_specific(queue, &queue, &queue, nil)
+        
+        if dispatch_get_specific(&queue) != nil {
+            print("queue")
+        } else {
+            print("not the queue")
+        }
+        
+        dispatch_async(queue) {
+            if dispatch_get_specific(&queue) != nil {
+                print("get the quee")
+            }
+        }
     }
 }
