@@ -115,4 +115,20 @@ public struct ThreadCode {
             }
         }
     }
+    
+    /**
+     *  GCD取消block的执行，适用于iOS8.0后
+     */
+    @available(iOS 8.0, *)
+    func GCD_Cancel() {
+        
+        let queue = dispatch_queue_create("queue", DISPATCH_QUEUE_SERIAL)
+        let block = dispatch_block_create(dispatch_block_flags_t(0)) {
+            print("begin")
+            sleep(2)
+            print("end")
+        }
+        dispatch_async(queue, block)
+        dispatch_block_cancel(block)
+    }
 }
