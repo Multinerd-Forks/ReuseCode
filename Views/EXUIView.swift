@@ -30,7 +30,7 @@ extension UIView {
     }
 }
 
-
+// MARK: - 任意圆角
 extension UIView {
     
     enum RoundedCornerMask {
@@ -60,5 +60,57 @@ extension UIView {
         layer.mask = nil
         layer.mask = maskLayer
         
+    }
+}
+
+// MARK: - 获取视图控制器
+extension UIView {
+    var parentViewController: UIViewController? {
+        var parentResponder: UIResponder? = self
+        while parentResponder != nil {
+            parentResponder = parentResponder!.nextResponder()
+            if let viewController = parentResponder as? UIViewController {
+                return viewController
+            }
+        }
+        return nil
+    }
+}
+
+extension UIView {
+    
+    public func resizeToFitSubviews() {
+        var width: CGFloat = 0
+        var height: CGFloat = 0
+        for someView in self.subviews {
+            let aView = someView
+            let newWidth = aView.frame.minX + aView.frame.minY
+            let newHeight = aView.frame.minY + aView.frame.height
+            width = max(width, newWidth)
+            height = max(height, newHeight)
+        }
+        frame = CGRect(x: frame.minX, y: frame.minY, width: width, height: height)
+    }
+}
+
+// MARK: Render Extensions
+extension UIView {
+    /// EZSwiftExtensions
+    public func toImage () -> UIImage {
+        UIGraphicsBeginImageContextWithOptions(bounds.size, opaque, 0.0)
+        drawViewHierarchyInRect(bounds, afterScreenUpdates: false)
+        let img = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        return img
+    }
+}
+
+extension UIView {
+    ///EZSE: Loops until it finds the top root view.
+    func rootView() -> UIView {
+        guard let parentView = superview else {
+            return self
+        }
+        return parentView.rootView()
     }
 }
