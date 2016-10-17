@@ -24,13 +24,13 @@ extension UIViewController {
 // MARK: - 设置返回按钮
 extension UIViewController {
     
-    func st_setLeftNavigationItem(imgName: String = "back_float_normal")  {
-        let backBtnItem : UIBarButtonItem = UIBarButtonItem(image: UIImage(named: "ic_back"), style: .Plain, target: self, action: #selector(UIViewController.xyzback))
+    func st_setLeftNavigationItem(_ imgName: String = "back_float_normal")  {
+        let backBtnItem : UIBarButtonItem = UIBarButtonItem(image: UIImage(named: "ic_back"), style: .plain, target: self, action: #selector(UIViewController.xyzback))
         self.navigationItem.leftBarButtonItem = backBtnItem
     }
     
     func xyzback() {
-        navigationController?.popViewControllerAnimated(true)
+        navigationController?.popViewController(animated: true)
     }
 }
 

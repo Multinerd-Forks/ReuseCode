@@ -9,12 +9,12 @@
 import Foundation
 
 
-public struct ProjectInfo {
+public struct ApplicationInfo {
     
     public static var appDisplayName: String? {
-        if let bundleDisplayName = NSBundle.mainBundle().objectForInfoDictionaryKey("CFBundleDisplayName") as? String {
+        if let bundleDisplayName = Bundle.main.object(forInfoDictionaryKey: "CFBundleDisplayName") as? String {
             return bundleDisplayName
-        } else if let bundleName = NSBundle.mainBundle().objectForInfoDictionaryKey("CFBundleName") as? String {
+        } else if let bundleName = Bundle.main.object(forInfoDictionaryKey: "CFBundleName") as? String {
             return bundleName
         }
         
@@ -22,11 +22,11 @@ public struct ProjectInfo {
     }
     
     public static var appVersion: String? {
-        return NSBundle.mainBundle().objectForInfoDictionaryKey("CFBundleShortVersionString") as? String
+        return Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String
     }
     
     public static var appBuild: String? {
-        return NSBundle.mainBundle().objectForInfoDictionaryKey(kCFBundleVersionKey as String) as? String
+        return Bundle.main.object(forInfoDictionaryKey: kCFBundleVersionKey as String) as? String
     }
     
     public static var appVersionAndBuild: String? {
@@ -43,9 +43,9 @@ public struct ProjectInfo {
     public static var deviceVersion: String {
         var size: Int = 0
         sysctlbyname("hw.machine", nil, &size, nil, 0)
-        var machine = [CChar](count: Int(size), repeatedValue: 0)
+        var machine = [CChar](repeating: 0, count: Int(size))
         sysctlbyname("hw.machine", &machine, &size, nil, 0)
-        return String.fromCString(machine)!
+        return String(cString: machine)
     }
     
     public static var isDebug: Bool {
@@ -81,17 +81,17 @@ public struct ProjectInfo {
     }
     
     public static func documentDirectory() -> String {
-        let paths = NSSearchPathForDirectoriesInDomains(NSSearchPathDirectory.DocumentDirectory, NSSearchPathDomainMask.UserDomainMask, true)
+        let paths = NSSearchPathForDirectoriesInDomains(FileManager.SearchPathDirectory.documentDirectory, FileManager.SearchPathDomainMask.userDomainMask, true)
         return paths[0]
     }
     
     public static func libraryDirectory() -> String {
-        let paths = NSSearchPathForDirectoriesInDomains(NSSearchPathDirectory.LibraryDirectory, NSSearchPathDomainMask.UserDomainMask, true)
+        let paths = NSSearchPathForDirectoriesInDomains(FileManager.SearchPathDirectory.libraryDirectory, FileManager.SearchPathDomainMask.userDomainMask, true)
         return paths[0]
     }
     
     public static func cachesDirectory() -> String {
-        let paths = NSSearchPathForDirectoriesInDomains(NSSearchPathDirectory.CachesDirectory, NSSearchPathDomainMask.UserDomainMask, true)
+        let paths = NSSearchPathForDirectoriesInDomains(FileManager.SearchPathDirectory.cachesDirectory, FileManager.SearchPathDomainMask.userDomainMask, true)
         return paths[0]
     }
     

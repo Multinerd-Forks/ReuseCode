@@ -15,7 +15,7 @@ let thousand = 1_000.0
 
 public extension Int {
     
-    func numberToHuman(showZero showZero: Bool = false) -> String {
+    func numberToHuman(showZero: Bool = false) -> String {
         if self == 0 && !showZero { return "" }
         
         let double = Double(self)
@@ -49,7 +49,7 @@ public extension Int {
         if self == 0 {
             return ""
         }
-        return NSNumberFormatter.localizedStringFromNumber(NSNumber(integer:self), numberStyle: NSNumberFormatterStyle.DecimalStyle)
+        return NumberFormatter.localizedString(from: NSNumber(value: self as Int), number: NumberFormatter.Style.decimal)
     }
     
 }

@@ -36,15 +36,15 @@ extension String {
      - parameter substring: target string
      - returns: true: contain false: uncontain
      */
-    func contains(substring: String) -> Bool {
-        return rangeOfString(substring) != nil
+    func contains(_ substring: String) -> Bool {
+        return range(of: substring) != nil
     }
     
     /**
      Determine whether pure Numbers
      */
     func isNumeric() -> Bool {
-        if let _ = NSNumberFormatter().numberFromString(self) {
+        if let _ = NumberFormatter().number(from: self) {
             return true
         }
         return false
@@ -57,8 +57,8 @@ extension String {
      */
     subscript(r: Range<Int>) -> String {
         get {
-            let startIndex = self.startIndex.advancedBy(r.startIndex)
-            let endIndex = self.startIndex.advancedBy(r.endIndex - r.startIndex)
+            let startIndex = self.characters.index(self.startIndex, offsetBy: r.lowerBound)
+            let endIndex = self.characters.index(self.startIndex, offsetBy: r.upperBound - r.lowerBound)
             return self[startIndex..<endIndex]
         }
     }
@@ -69,9 +69,9 @@ extension String {
      - parameter length:     expected length
      - returns: the subed string
      */
-    func substring(startIndex: Int, length: Int) -> String {
-        let start = self.startIndex.advancedBy(startIndex)
-        let end = self.startIndex.advancedBy(startIndex + length)
+    func substring(_ startIndex: Int, length: Int) -> String {
+        let start = self.characters.index(self.startIndex, offsetBy: startIndex)
+        let end = self.characters.index(self.startIndex, offsetBy: startIndex + length)
         return self[start..<end]
     }
     
@@ -80,9 +80,9 @@ extension String {
      - parameter format: e.g yyyy-MM-dd
      - returns: an optional NSDate object
      */
-    func toDate(format: String = "yyyy-MM-dd HH:mm:ss") -> NSDate? {
-        let dateFormatter = NSDateFormatter()
+    func toDate(_ format: String = "yyyy-MM-dd HH:mm:ss") -> Date? {
+        let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = format
-        return dateFormatter.dateFromString(self)
+        return dateFormatter.date(from: self)
     }
 }

@@ -29,7 +29,7 @@ extension CGFloat {
     }
     
     
-    public func degreesToRadians (angle: CGFloat) -> CGFloat {
+    public func degreesToRadians (_ angle: CGFloat) -> CGFloat {
         return (CGFloat (M_PI) * angle) / 180.0
     }
 }

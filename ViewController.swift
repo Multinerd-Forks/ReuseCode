@@ -10,15 +10,19 @@ import UIKit
 
 class ViewController: UIViewController {
     
-    let queueA = dispatch_queue_create("a", DISPATCH_QUEUE_SERIAL)
-    let queueB = dispatch_queue_create("b", DISPATCH_QUEUE_SERIAL)
+    let queueA = DispatchQueue(label: "a", attributes: [])
+    let queueB = DispatchQueue(label: "b", attributes: [])
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
-//       syncA()
+
+        UIStoryboard.storyboard(storyboard: .Main).instantiateVC(ViewController.self)?.syncA()
         
-        GCD_Cancel()
+        CCV.loadFromNib().te()
+        
+        let path = NSIndexPath(index: 1)
+        UITableView().dequeueReusableCell(indexPath: path, cellType: CCV.self).te()
+
     }
 
     override func didReceiveMemoryWarning() {
@@ -27,32 +31,20 @@ class ViewController: UIViewController {
     }
 
     func syncA() {
-        dispatch_sync(queueB) { 
-            self.syncB()
-            print("a")
-        }
+        print("gggg")
     }
     
     func syncB() {
-        dispatch_sync(queueA) {
+        queueA.sync {
 //            print("b")
             self.syncA()
             print("b")
         }
     }
-    
-    @available(iOS 8.0, *)
-    func GCD_Cancel() {
-        
-        let queue = dispatch_queue_create("queue", DISPATCH_QUEUE_SERIAL)
-        let block = dispatch_block_create(dispatch_block_flags_t(0)) {
-            print("begin")
-            sleep(2)
-            print("end")
-        }
-        dispatch_async(queue, block)
-        dispatch_block_cancel(block)
-    }
+
 
 }
 
+class CCV: UITableViewCell, Reusable {
+    func te() {}
+}
