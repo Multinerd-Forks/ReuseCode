@@ -48,3 +48,23 @@ extension CALayer {
         beginTime = timeSincePause
     }
 }
+
+
+struct CoreAnimationKeys {
+    
+    static let Scale     = "transform.scale"
+    static let RotationX    = "transform.rotation.x"
+    static let RotationY    = "transform.rotation.y"
+    static let RotationZ   = "transform.rotation.z"
+    static let Rotation    = "transform.rotation"
+    
+    static let KeyFrame  = "contents"
+    static let PositionY = "position.y"
+    static let Opacity   = "opacity"
+    static let StrokeStart     = "strokeStart"
+    static let StrokeEnd  = "strokeEnd"
+    
+    static let Path = "path"
+    
+    
+}

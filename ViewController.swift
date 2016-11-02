@@ -15,14 +15,17 @@ class ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        UIStoryboard.storyboard(storyboard: .Main).instantiateVC(ViewController.self)?.syncA()
         
-        CCV.loadFromNib().te()
+       
+    }
+    @IBAction func action(_ sender: UIButton) {
+        do {
+            _ = try throwMe(shouldThrow: true)
+        }catch {
+            //print(error)
+            alert(title: "lai", message:  "\(error)")
+        }
         
-        let path = NSIndexPath(index: 1)
-        UITableView().dequeueReusableCell(indexPath: path, cellType: CCV.self).te()
-
     }
 
     override func didReceiveMemoryWarning() {

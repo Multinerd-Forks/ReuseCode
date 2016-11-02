@@ -30,7 +30,7 @@ extension UIViewController {
     }
     
     func xyzback() {
-        navigationController?.popViewController(animated: true)
+        let _ = navigationController?.popViewController(animated: true)
     }
 }
 
